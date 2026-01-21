@@ -1,0 +1,19 @@
+ <mat-card>
+ <div fxLayoutGap="15%" fxFlex="50" fxLayoutAlign="center">
+
+  <mat-form-field fxFlex="80">
+    <!-- <mat-label>CUSTOMERID</mat-label> -->
+    <input [(ngModel)]="enachid" matInput placeholder="Customer ID" autocomplete="off" upperCase maxlength="30" onkeypress="return !(event.charCode == 46)" type="text">
+  </mat-form-field>
+</div>
+
+<div fxLayoutGap="3%" fxFlex="25" fxLayoutAlign="center">
+  <button style="height: 40px;" type="button" mat-raised-button  color="primary"
+     (click)="getSelectedLoanDetails()">Generate E nach Url</button>
+</div>
+</mat-card>
+   
+
+
+
+

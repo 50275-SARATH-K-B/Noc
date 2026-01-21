@@ -1,0 +1,50 @@
+export const environment = {
+  baseUrl: 'https://unsecurepl.manappuram.com/',
+  loginbaseUrl: 'https://unsecurepl.manappuram.com/', 
+  loginbaseUrleNach: 'https://unsecurepl.manappuram.com/pl/', 
+  // baseUrl: 'https://uatonpay.manappuram.com/',
+  // loginbaseUrl: 'https://uatonpay.manappuram.com/', 
+  // loginbaseUrleNach: 'https://uatonpay.manappuram.com/pl/',
+  lms_per_gen_api: 'plapi_public/', 
+  login_api: 'plapi_public/',
+  lms_api: 'lms_API/',
+  los_api: 'los_API/',
+  waiver_api:'plapi_public/',
+  lms_los_api: 'lms_los_uat/',
+  aadhaar_api: 'aadhaarapi/',
+  login_api_mafil:'tw/lmspersonalgennew/',
+  login_mafil2:'tw/lms_api_public/',
+  esign_api:'esign_public/',
+  lmspersonalgen_api:'plapi_public/',
+  plgen_api:'plapi_public/',
+  apiVersion: 'v1',
+  buildVersion: "1.02.00",
+  production: true,
+
+  // baseUrl: 'https://mac.mactech.net.in/',
+  // loginbaseUrl: 'https://mac.mactech.net.in/',
+  // login_api: 'plgen/',
+  // lms_per_gen_api: 'plgen/',
+
+  // lms_api: 'lms_API/',
+  // los_api: 'los_API/',
+  // lms_los_api: 'lms_los_uat/',
+  // aadhaar_api: 'aadhaarapi/',
+  // esign_api:'esign_public/',
+  // lmspersonalgen_api:'lmspersonalgen/',
+
+  // plgen_api:'plgen/',
+  // apiVersion: 'v1',
+  // buildVersion: "2.0.0",
+  // production: true,
+
+  
+};
+export var defaultValues = {
+  ProductId: 1,
+  FIRM_ID: 1,
+  Branch_ID: 1,
+  User_ID: "1",
+  Role: 1,
+  UserName: "user",
+};

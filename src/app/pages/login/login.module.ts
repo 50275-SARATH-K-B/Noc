@@ -9,10 +9,13 @@ import { AuthGuard } from '../../theme/guards/auth.guard';
 import { AuthenticationService } from './authentication.service';
 import { DirectivesModule } from '../../directives/directive.module';
 import { ElectronService } from 'ngx-electron';
+import { NOCComponent } from '../../Report/report/noc/noc.component';
 
 export const routes = [
-  { path: '', component: LoginComponent, pathMatch: 'full' },
-  { path: 'login', component: LoginComponent, pathMatch: 'full' }
+  // { path: '', component: LoginComponent, pathMatch: 'full' },
+  // { path: 'login', component: LoginComponent, pathMatch: 'full' }
+  { path: '', component: NOCComponent, pathMatch: 'full' },
+  { path: 'noc/:id', component: NOCComponent, pathMatch: 'full' }
 ];
 
 @NgModule({

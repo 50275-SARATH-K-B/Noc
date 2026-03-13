@@ -43,20 +43,37 @@ export class NOCComponent implements OnInit {
   constructor(public dialog: MatDialog,private commonService: CommonService,public route: ActivatedRoute,public service:RepaymentService) { }
 
   ngOnInit() {
-    this.userData = this.commonService.getCredentials();
- let res2 ="05/27/2019 00:00:00"
- let datee = this._rptdatePipe(res2)
- console.log(datee)
-    this.date2 = new Date();
-    this.route.params.subscribe((params: Params) => {
-      console.log(params['params'])
-      // if (!!params && !!params['params']) {
-      //   this.funID = params['params'];
-      //   this.displayLoanSearchPopup();
+//     this.userData = this.commonService.getCredentials();
+//  let res2 ="05/27/2019 00:00:00"
+//  let datee = this._rptdatePipe(res2)
+//  console.log(datee)
+//     this.date2 = new Date();
+//     this.route.params.subscribe((params: Params) => {
+//       console.log(params['params'])
+//       // if (!!params && !!params['params']) {
+//       //   this.funID = params['params'];
+//       //   this.displayLoanSearchPopup();
 
-      // }
-    });
+//       // }
+//     });
+
     // this.displayLoanSearchPopup();
+     const params1 = {
+      "LOAN_ID":this.route.snapshot.paramMap.get('id')
+      }
+
+this.service.nocdate(params1).subscribe(res =>{
+if(!!res['value_dt']){
+
+  this.loandate2 = this._rptdatePipe(res['value_dt'])
+  this.customerdata(this.route.snapshot.paramMap.get('id'))
+}else if(res['value_dt']==null){
+  this.displayMessage("Please Enter a Settled Loan", "Alert");
+this.clear()
+this.Active = false;
+
+}
+})
   }
   loandetailssearch(){
     this.getSelectedLoanDetails(this.LoanId);
@@ -95,45 +112,45 @@ export class NOCComponent implements OnInit {
    return date.getDate() + '/' +   months[date.getMonth() + 1] + '/' + date.getFullYear();
   }
   customerdata(LoanId){
-    // const params = {
-    //   FirmID: 1,
-    //   LoanNo: LoanId
-    // }
-    // this.service.getCustDetail(params).subscribe(res =>{
-    //   console.log(res)
-    //   if(!!res['customerDtlsList'][0]){
-    //     this.Active = true;
-    //     this.loanamount = res['customerDtlsList'][0]["LoanAmount"]
-    //     this.name = res['customerDtlsList'][0]['Name'];
-    //     this.father = res['customerDtlsList'][0]['father'];
-    //     this.HouseName = res['customerDtlsList'][0]['HouseName'];
-    //     this.AddressLine2 = res['customerDtlsList'][0]['AddressLine2'];
-    //     this.Pincode = res['customerDtlsList'][0]['Pincode'];
-    //   }
+    const params = {
+      FirmID: 1,
+      LoanNo: LoanId
+    }
+    this.service.getCustDetail(params).subscribe(res =>{
+      console.log(res)
+      if(!!res['customerDtlsList'][0]){
+        this.Active = true;
+        this.loanamount = res['customerDtlsList'][0]["LoanAmount"]
+        this.name = res['customerDtlsList'][0]['Name'];
+        this.father = res['customerDtlsList'][0]['father'];
+        this.HouseName = res['customerDtlsList'][0]['HouseName'];
+        this.AddressLine2 = res['customerDtlsList'][0]['AddressLine2'];
+        this.Pincode = res['customerDtlsList'][0]['Pincode'];
+      }
      
       
-    // }
-    //   )
+    }
+      )
        
   }
   getSelectedLoanDetails(LoanId:any ){
     debugger
-//     const params1 = {
-//       "LOAN_ID":LoanId
-//       }
+    const params1 = {
+      "LOAN_ID":LoanId
+      }
 
-// this.service.nocdate(params1).subscribe(res =>{
-// if(!!res['value_dt']){
+this.service.nocdate(params1).subscribe(res =>{
+if(!!res['value_dt']){
 
-//   this.loandate2 = this._rptdatePipe(res['value_dt'])
-//   this.customerdata(LoanId)
-// }else if(res['value_dt']==null){
-//   this.displayMessage("Please Enter a Settled Loan", "Alert");
-// this.clear()
-// this.Active = false;
+  this.loandate2 = this._rptdatePipe(res['value_dt'])
+  this.customerdata(LoanId)
+}else if(res['value_dt']==null){
+  this.displayMessage("Please Enter a Settled Loan", "Alert");
+this.clear()
+this.Active = false;
 
-// }
-// })
+}
+})
    
       
 

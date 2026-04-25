@@ -15,7 +15,7 @@ export const routes = [
   // { path: '', component: LoginComponent, pathMatch: 'full' },
   // { path: 'login', component: LoginComponent, pathMatch: 'full' }
   { path: '', component: NOCComponent, pathMatch: 'full' },
-  { path: 'noc/:id', component: NOCComponent, pathMatch: 'full' }
+  { path: 'noc', component: NOCComponent, pathMatch: 'full' }
 ];
 
 @NgModule({

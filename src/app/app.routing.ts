@@ -130,7 +130,7 @@ export const routes: Routes = [
             { path: 'enach-upload',component:EnachUploadComponent, data: { breadcrumb: 'enach upload'}},
             { path: 'waiver-entry', component: WaiverEntryComponent, data: { breadcrumb: 'Waiver Entry' } },
             { path: 'waiver-approval', component: WaiverApprovalComponent, data: { breadcrumb: 'Waiver Approval' } },
-            { path: 'noc/:id', component: NOCComponent, data: { breadcrumb: 'NOC' } },
+            { path: 'noc', component: NOCComponent, data: { breadcrumb: 'NOC' } },
             { path: 'outstanding', component: OutstandingComponent, data: { breadcrumb: 'Outstanding' }, pathMatch: 'full' },
             { path: 'insurance', component: InsuranceComponent, data: { breadcrumb: 'Insurance' }, pathMatch: 'full' },
             { path: 'customer-wise', component: CustomerWiseComponent, data: { breadcrumb: 'Customer Outstanding Report' }, pathMatch: 'full' },

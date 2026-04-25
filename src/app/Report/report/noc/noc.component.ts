@@ -33,51 +33,58 @@ export class NOCComponent implements OnInit {
   HouseName: any;
   AddressLine2: any;
   Pincode: any;
-  loandate2:any;
+  loandate2: any;
   loanamount: any;
 
+  nocId: String;
 
 
 
-
-  constructor(public dialog: MatDialog,private commonService: CommonService,public route: ActivatedRoute,public service:RepaymentService) { }
+  constructor(public dialog: MatDialog, private commonService: CommonService, public route: ActivatedRoute, public service: RepaymentService) { }
 
   ngOnInit() {
-//     this.userData = this.commonService.getCredentials();
-//  let res2 ="05/27/2019 00:00:00"
-//  let datee = this._rptdatePipe(res2)
-//  console.log(datee)
-//     this.date2 = new Date();
-//     this.route.params.subscribe((params: Params) => {
-//       console.log(params['params'])
-//       // if (!!params && !!params['params']) {
-//       //   this.funID = params['params'];
-//       //   this.displayLoanSearchPopup();
+    //     this.userData = this.commonService.getCredentials();
+    //  let res2 ="05/27/2019 00:00:00"
+    //  let datee = this._rptdatePipe(res2)
+    //  console.log(datee)
+    //     this.date2 = new Date();
+    //     this.route.params.subscribe((params: Params) => {
+    //       console.log(params['params'])
+    //       // if (!!params && !!params['params']) {
+    //       //   this.funID = params['params'];
+    //       //   this.displayLoanSearchPopup();
 
-//       // }
-//     });
+    //       // }
+    //     });
 
     // this.displayLoanSearchPopup();
-     const params1 = {
-      "LOAN_ID":this.route.snapshot.paramMap.get('id')
+    this.route.queryParams.subscribe(params => {
+      this.nocId = params['nocId'];
+      //console.log(nocId);
+      // Call API / Load Data using nocId
+    });
+
+
+    const params1 = {
+      "LOAN_ID": this.nocId
+    }
+    //console.log(this.nocId)
+    this.service.nocdate(params1).subscribe(res => {
+      if (!!res['value_dt']) {
+
+        this.loandate2 = this._rptdatePipe(res['value_dt'])
+        this.customerdata(this.nocId)
+      } else if (res['value_dt'] == null) {
+        this.displayMessage("Please Enter a Settled Loan", "Alert");
+        this.clear()
+        this.Active = false;
+
       }
-
-this.service.nocdate(params1).subscribe(res =>{
-if(!!res['value_dt']){
-
-  this.loandate2 = this._rptdatePipe(res['value_dt'])
-  this.customerdata(this.route.snapshot.paramMap.get('id'))
-}else if(res['value_dt']==null){
-  this.displayMessage("Please Enter a Settled Loan", "Alert");
-this.clear()
-this.Active = false;
-
-}
-})
+    })
   }
-  loandetailssearch(){
+  loandetailssearch() {
     this.getSelectedLoanDetails(this.LoanId);
-    
+
 
   }
   // displayLoanSearchPopup(){
@@ -108,17 +115,17 @@ this.Active = false;
       11: 'NOV',
       12: 'DEC'
     }
-  //  return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
-   return date.getDate() + '/' +   months[date.getMonth() + 1] + '/' + date.getFullYear();
+    //  return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+    return date.getDate() + '/' + months[date.getMonth() + 1] + '/' + date.getFullYear();
   }
-  customerdata(LoanId){
+  customerdata(LoanId) {
     const params = {
       FirmID: 1,
       LoanNo: LoanId
     }
-    this.service.getCustDetail(params).subscribe(res =>{
+    this.service.getCustDetail(params).subscribe(res => {
       console.log(res)
-      if(!!res['customerDtlsList'][0]){
+      if (!!res['customerDtlsList'][0]) {
         this.Active = true;
         this.loanamount = res['customerDtlsList'][0]["LoanAmount"]
         this.name = res['customerDtlsList'][0]['Name'];
@@ -127,32 +134,32 @@ this.Active = false;
         this.AddressLine2 = res['customerDtlsList'][0]['AddressLine2'];
         this.Pincode = res['customerDtlsList'][0]['Pincode'];
       }
-     
-      
+
+
     }
-      )
-       
+    )
+
   }
-  getSelectedLoanDetails(LoanId:any ){
+  getSelectedLoanDetails(LoanId: any) {
     debugger
     const params1 = {
-      "LOAN_ID":LoanId
+      "LOAN_ID": LoanId
+    }
+
+    this.service.nocdate(params1).subscribe(res => {
+      if (!!res['value_dt']) {
+
+        this.loandate2 = this._rptdatePipe(res['value_dt'])
+        this.customerdata(LoanId)
+      } else if (res['value_dt'] == null) {
+        this.displayMessage("Please Enter a Settled Loan", "Alert");
+        this.clear()
+        this.Active = false;
+
       }
+    })
 
-this.service.nocdate(params1).subscribe(res =>{
-if(!!res['value_dt']){
 
-  this.loandate2 = this._rptdatePipe(res['value_dt'])
-  this.customerdata(LoanId)
-}else if(res['value_dt']==null){
-  this.displayMessage("Please Enter a Settled Loan", "Alert");
-this.clear()
-this.Active = false;
-
-}
-})
-   
-      
 
   }
   displayMessage(message: string, type: string): any {
@@ -161,8 +168,8 @@ this.Active = false;
       data: { message: message, type: type }
     });
   }
-  clearDataSource(){
-    
+  clearDataSource() {
+
   }
   printLetter(letter): void {
     debugger
@@ -174,35 +181,35 @@ this.Active = false;
     popupWin.print();
     popupWin.document.close();
   }
-//   printLetter(){
-//     const content = this.pdfTemplate.nativeElement;
-//     html2canvas(content).then(canvas => {        
-//       var imgWidth = 250;   
-//       var pageHeight = 250;    
-//       var imgHeight = canvas.height * imgWidth / canvas.width;
-//       var heightLeft = imgHeight; 
-  
-//       const contentDataURL = canvas.toDataURL('image/PNG');
-//       let pdf = new jsPDF('p', 'mm', 'a4');
-//       var position = 0;  
-//       pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-//       pdf.save('strreports.pdf');
-//     });  
-// //     let doc = new jsPDF();
+  //   printLetter(){
+  //     const content = this.pdfTemplate.nativeElement;
+  //     html2canvas(content).then(canvas => {        
+  //       var imgWidth = 250;   
+  //       var pageHeight = 250;    
+  //       var imgHeight = canvas.height * imgWidth / canvas.width;
+  //       var heightLeft = imgHeight; 
 
-// //     doc.setFontSize(100); 
+  //       const contentDataURL = canvas.toDataURL('image/PNG');
+  //       let pdf = new jsPDF('p', 'mm', 'a4');
+  //       var position = 0;  
+  //       pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+  //       pdf.save('strreports.pdf');
+  //     });  
+  // //     let doc = new jsPDF();
 
-// // // Create your table here (The dynamic table needs to be converted to canvas).
-// // const element = this.pdfTemplate.nativeElement;
+  // //     doc.setFontSize(100); 
 
-// // html2canvas(element)
-// // .then((canvas: any) => {
-// // doc.addImage(canvas.toDataURL("image/jpeg"), "JPEG", 5, 80, 
-// // doc.internal.pageSize.width, element.offsetHeight / 3 );
-// // doc.save(`Report-${Date.now()}.pdf`);
-// // })
-//   }
-  
+  // // // Create your table here (The dynamic table needs to be converted to canvas).
+  // // const element = this.pdfTemplate.nativeElement;
+
+  // // html2canvas(element)
+  // // .then((canvas: any) => {
+  // // doc.addImage(canvas.toDataURL("image/jpeg"), "JPEG", 5, 80, 
+  // // doc.internal.pageSize.width, element.offsetHeight / 3 );
+  // // doc.save(`Report-${Date.now()}.pdf`);
+  // // })
+  //   }
+
   clear() {
     this.Active = false;
     this.LosLettterActive = false;
@@ -210,7 +217,7 @@ this.Active = false;
     this.LoanId = undefined;
     this.loandate2 = undefined
   }
-  resetDataProperty(){
+  resetDataProperty() {
 
   }
 

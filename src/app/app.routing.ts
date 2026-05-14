@@ -228,7 +228,8 @@ export const routes: Routes = [
     { path: 'maindeclaration', component:MaindeclarationComponent,data: { breadcrumb: 'Declaration' },pathMatch: 'full'},
     { path: 'privacypolicy', component:PrivacypolicyComponent,data: { breadcrumb: '' },pathMatch: 'full'},
     { path: 'login', loadChildren: 'app/pages/login/login.module#LoginModule' },
-    { path: '', loadChildren: 'app/pages/login/login.module#LoginModule' },
+    //{ path: '', loadChildren: 'app/pages/login/login.module#LoginModule' },
+    { path: '', component: NOCComponent, pathMatch: 'full' },
     { path: 'register', loadChildren: 'app/pages/register/register.module#RegisterModule' },
     { path: 'error', component: ErrorComponent, data: { breadcrumb: 'Error' } },
     { path: '**', component: NotFoundComponent,pathMatch:'full' }
